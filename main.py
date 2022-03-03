@@ -1,13 +1,12 @@
 import argparse
-import os
 
 import requests
 
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 from urllib.parse import urlparse
 
 
-BITLY_TOKEN = os.environ["BITLY_TOKEN"]
+BITLY_TOKEN = dotenv_values(".env")["BITLY_TOKEN"]
 
 
 def shorten_link(token, url_to_cut):
@@ -21,7 +20,6 @@ def shorten_link(token, url_to_cut):
     short_url = response.json()["link"]
     return short_url
     
-
 
 def get_click_count(token, url_to_check):
     url_parsed = urlparse(url_to_check)
@@ -37,7 +35,6 @@ def get_click_count(token, url_to_check):
     return total_clicks
     
 
-
 def get_link_status(token, url_to_check):
     url_to_check = urlparse(url_to_check)
     url = "https://api-ssl.bitly.com/v4/bitlinks/{netloc}/{path}"
@@ -51,7 +48,6 @@ def main():
     parser = argparse.ArgumentParser(description="Создание или проверка короткой ссылки")
     parser.add_argument("link", help="Ваша ссылка")
     args = parser.parse_args()
-    load_dotenv()
     input_url = args.link
     link_status = get_link_status(BITLY_TOKEN, input_url)
     if link_status :
