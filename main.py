@@ -1,9 +1,8 @@
 import argparse
+from urllib.parse import urlparse
 
 import requests
-
 from dotenv import dotenv_values
-from urllib.parse import urlparse
 
 
 BITLY_TOKEN = dotenv_values(".env")["BITLY_TOKEN"]
